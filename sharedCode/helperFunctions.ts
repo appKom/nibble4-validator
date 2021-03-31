@@ -77,7 +77,10 @@ export const fetchToken = async (): Promise<string> => {
       "Content-Type": "application/x-www-form-urlencoded",
     },
   });
-  const json = await response.json();
-  return json.access_token as string;
+  if (response.ok) {
+    const json = await response.json();
+    return json.access_token as string;
+  }
+  else return undefined;
 };
 

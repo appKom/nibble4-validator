@@ -12,13 +12,30 @@ const httpTrigger: AzureFunction = async function (
   const rfid = req.query.rfid;
   const url = LOGIN_URI(rfid);
   const token = await fetchToken();
-  const response = await authorizedGet(token, { url });
-  const json = await response.json();
 
-  context.res = {
-    status: 200,
-    body: json,
-  };
+  if (token) {
+    const response = await authorizedGet(token, { url });
+    if (response.ok) {
+      const json = await response.json();
+      context.res = {
+        status: 200,
+        body: json,
+      };
+    }
+    else {
+      context.res = {
+        status: 500,
+        body: response.body,
+      };
+    }  
+  }
+  else {
+    context.res = {
+      status: 500,
+      body: {"error": "Could not fetch token"},
+    };
+  }
+
 };
 
 export default httpTrigger;
