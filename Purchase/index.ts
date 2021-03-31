@@ -5,13 +5,22 @@ import {OrderLineFormat} from "../sharedCode/types"
 const httpTrigger: AzureFunction = async function (context: Context, req: HttpRequest): Promise<void> {
     
     const token = await fetchToken();
-    const response = await authorizedPost(token, {url:TRANSACTION_URI, body:req.body})
-    const json = await response.json();
+    if (token) {
+        const response = await authorizedPost(token, {url:TRANSACTION_URI, body:req.body})
+        const json = await response.json();
 
-    context.res = {
-        status: 200,
-        body: json
-    };
+        context.res = {
+            status: response.status,
+            body: json
+        };
+    }
+    else {
+        context.res = {
+            status: 500,
+            body: {"error": "Could not fetch token"}
+        };
+    }
+  
 
 };
 export default httpTrigger;
