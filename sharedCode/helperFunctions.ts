@@ -81,11 +81,3 @@ export const fetchToken = async (): Promise<string> => {
   return json.access_token as string;
 };
 
-export const fetchInventory = async (url: string): Promise<Product[]> => {
-  const response = await get({ url });
-  if (response.ok) {
-    const json = await response.json();
-    return json;
-  }
-  return [];
-};

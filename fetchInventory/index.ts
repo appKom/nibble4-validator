@@ -1,22 +1,25 @@
 import { AzureFunction, Context, HttpRequest } from "@azure/functions";
-import { fetchInventory, INVENTORY_URI } from "../sharedCode/helperFunctions";
+import { get, INVENTORY_URI } from "../sharedCode/helperFunctions";
 
 const httpTrigger: AzureFunction = async function (
   context: Context,
   req: HttpRequest
 ): Promise<void> {
-  const inventory = await fetchInventory(INVENTORY_URI);
+    const response = await get({ url: INVENTORY_URI });
 
-  if (inventory.length > 0) {
-    context.res = {
-      status: 200 /* Defaults to 200 */,
-      body: inventory,
-    };
-  } else {
-    context.res = {
-      status: 500,
-    };
-  }
+    if (response.ok) {
+      const json = await response.json();
+
+      context.res = {
+        body: json,
+      };
+    }
+    else {
+      context.res = {
+        status: 500,
+        body: response.body,
+      };
+    }
 };
 
 export default httpTrigger;
