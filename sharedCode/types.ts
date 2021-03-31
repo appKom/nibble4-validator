@@ -11,3 +11,20 @@ export type Product = {
     name: string;
   };
 };
+
+export type OrderLineFormat = {
+  user: number;
+  orders: CartItem[];
+};
+
+export type User = {
+  pk: number;
+  balance: number;
+  first_name: string;
+};
+
+
+export type CartItem = {
+  object_id: number;
+  quantity: number;
+};
