@@ -15,19 +15,12 @@ const httpTrigger: AzureFunction = async function (
 
   if (token) {
     const response = await authorizedGet(token, { url });
-    if (response.ok) {
-      const json = await response.json();
-      context.res = {
-        status: 200,
-        body: json,
-      };
-    }
-    else {
-      context.res = {
-        status: 500,
-        body: response.body,
-      };
-    }  
+    const json = await response.json();
+
+    context.res = {
+      status: response.status,
+      body: json,
+    };
   }
   else {
     context.res = {
