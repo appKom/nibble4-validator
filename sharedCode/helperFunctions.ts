@@ -14,6 +14,8 @@ export const BALANCE_URI = `${API_BASE}/transactions/`; // Update balance
 export const TRANSACTION_URI = `${API_BASE}/orderline/`; // purchase item
 export const LOGIN_URI = (rfid: string): string =>
   `${API_BASE}/usersaldo/?rfid=${rfid}`;
+export const PREVIOUS_ORDERS_URI = (pk: number): string =>
+  `${API_BASE}/orderline/userorders/?pk=${pk}`;
 
 type AJAXArguments = {
   url: string;
@@ -80,7 +82,5 @@ export const fetchToken = async (): Promise<string> => {
   if (response.ok) {
     const json = await response.json();
     return json.access_token as string;
-  }
-  else return undefined;
+  } else return undefined;
 };
-
