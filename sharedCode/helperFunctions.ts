@@ -14,7 +14,7 @@ export const BALANCE_URI = `${API_BASE}/transactions/`; // Update balance
 export const TRANSACTION_URI = `${API_BASE}/orderline/`; // purchase item
 export const LOGIN_URI = (rfid: string): string =>
   `${API_BASE}/usersaldo/?rfid=${rfid}`;
-export const PREVIOUS_ORDERS_URI = (pk: number): string =>
+export const PREVIOUS_ORDERS_URI = (pk: string): string =>
   `${API_BASE}/orderline/userorders/?pk=${pk}`;
 
 type AJAXArguments = {

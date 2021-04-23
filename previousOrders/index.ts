@@ -1,15 +1,15 @@
 import { AzureFunction, Context, HttpRequest } from "@azure/functions";
 import {
+  PREVIOUS_ORDERS_URI,
   authorizedGet,
   fetchToken,
-  PREVIOUS_ORDERS_URI,
 } from "../sharedCode/helperFunctions";
 
 const httpTrigger: AzureFunction = async function (
   context: Context,
   req: HttpRequest
 ): Promise<void> {
-  const pk = +req.query.pk;
+  const pk = req.query.pk;
   const url = PREVIOUS_ORDERS_URI(pk);
   const token = await fetchToken();
 

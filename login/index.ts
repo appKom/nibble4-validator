@@ -21,14 +21,12 @@ const httpTrigger: AzureFunction = async function (
       status: response.status,
       body: json,
     };
-  }
-  else {
+  } else {
     context.res = {
       status: 500,
-      body: {"error": "Could not fetch token"},
+      body: { error: "Could not fetch token" },
     };
   }
-
 };
 
 export default httpTrigger;
