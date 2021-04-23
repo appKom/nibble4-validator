@@ -1,6 +1,6 @@
 import { AzureFunction, Context, HttpRequest } from "@azure/functions";
 import {
-  LOGIN_URI,
+  PREVIOUS_ORDERS_URI,
   authorizedGet,
   fetchToken,
 } from "../sharedCode/helperFunctions";
@@ -9,8 +9,8 @@ const httpTrigger: AzureFunction = async function (
   context: Context,
   req: HttpRequest
 ): Promise<void> {
-  const rfid = req.query.rfid;
-  const url = LOGIN_URI(rfid);
+  const pk = req.query.pk;
+  const url = PREVIOUS_ORDERS_URI(pk);
   const token = await fetchToken();
 
   if (token) {
